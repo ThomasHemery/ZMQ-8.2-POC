@@ -1,0 +1,9 @@
+---
+version: "1"
+services:
+  php-client:
+    command: ["app:run"]
+    build: docker/php-client
+  php-server:
+    command: ["app:run"]
+    build: docker/php-server

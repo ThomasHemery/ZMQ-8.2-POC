@@ -1,0 +1,21 @@
+#!/bin/sh -e
+# Script for installing php zmq module from source
+
+# Install some deps for running phpize
+apk add ${PHPIZE_DEPS} libzmq zeromq zeromq-dev
+
+git clone https://github.com/remicollet/php-zmq.git
+cd php-zmq
+git checkout ${ZMQ_PHP_CHECKOUT_REF}
+phpize
+./configure
+make
+make test
+make install
+cd /
+rm -rf /php-zmq
+
+echo "extension=zmq.so" >> /usr/local/etc/php/php.ini
+
+# Cleanup phpize deps
+apk del ${PHPIZE_DEPS}
